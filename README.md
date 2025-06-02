@@ -36,7 +36,7 @@ API Image Enhancer memungkinkan pengguna untuk mengunggah gambar dan menerima ke
 
 1.  Buat(misalnya, `.env`) gunakan environment variables untuk menyimpan API Key Vyro AI Anda.
 
-    **Contoh `config.py`:**
+    **Contoh `.env`:**
     ```python
     VYRO_API_KEY = "YOUR_VYRO_AI_API_KEY"
     VYRO_API_URL = "URL_API_VYRO_AI_UNTUK_PENINGKATAN_GAMBAR" # Sesuaikan dengan endpoint Vyro AI
