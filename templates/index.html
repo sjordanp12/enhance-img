@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Enhancement Tool</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <style>
+      :root {
+        --primary-color: #4361ee;
+        --secondary-color: #3a0ca3;
+        --accent-color: #4cc9f0;
+        --success-color: #2ec4b6;
+        --light-bg: #f8f9fa;
+        --dark-bg: #212529;
+      }
+
+      body {
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+        line-height: 1.7;
+      }
+
+      .hero-section {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 120px 0 100px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        opacity: 0.4;
+      }
+
+      .hero-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.3rem;
+        font-weight: 400;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+      }
+
+      .section-title {
+        font-weight: 600;
+        color: var(--secondary-color);
+        margin-bottom: 1rem;
+      }
+
+      .section-subtitle {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+      }
+
+      .feature-card {
+        background-color: white;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+        height: 100%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .feature-card:hover {
+        border: 1px solid rgb(64, 48, 201);
+        transition: all ease-in-out 0.3s;
+      }
+
+      .feature-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        color: white;
+        margin-bottom: 20px;
+        font-size: 1.8rem;
+      }
+
+      .feature-title {
+        font-weight: 600;
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+      }
+
+      .enhancement-section {
+        background-color: var(--light-bg);
+      }
+
+      .upload-container {
+        background-color: white;
+        border-radius: 12px;
+        padding: 40px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+        margin-bottom: 30px;
+      }
+
+      .custom-file-upload {
+        display: inline-block;
+        padding: 12px 25px;
+        background: var(--primary-color);
+        color: white;
+        border-radius: 30px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .custom-file-upload:hover {
+        background: var(--secondary-color);
+        transform: translateY(-3px);
+      }
+
+      .image-container {
+        background-color: white;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+        height: 100%;
+      }
+
+      .image-title {
+        font-weight: 600;
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+      }
+
+      .image-title i {
+        margin-right: 10px;
+        color: var(--primary-color);
+      }
+
+      .image-preview {
+        width: 100%;
+        height: 300px;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .image-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .placeholder-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #999;
+        font-style: italic;
+      }
+
+      .download-btn {
+        background: var(--success-color);
+        color: white;
+        border-radius: 30px;
+        font-weight: 500;
+        padding: 10px 25px;
+        margin-top: 20px;
+        transition: all 0.3s ease;
+      }
+
+      .download-btn:hover {
+        background: #25a99d;
+        transform: translateY(-3px);
+        color: white;
+      }
+
+      .enhance-btn {
+        background: var(--accent-color);
+        color: white;
+        border: none;
+        border-radius: 30px;
+        font-weight: 500;
+        padding: 12px 30px;
+        transition: all 0.3s ease;
+      }
+
+      .enhance-btn:hover {
+        background: #3ab4d9;
+        transform: translateY(-3px);
+      }
+
+      .enhance-btn:disabled {
+        background-color: #ccc;
+        transform: none;
+      }
+
+      .file-name {
+        margin-left: 15px;
+        font-style: italic;
+      }
+
+      footer {
+        background-color: var(--dark-bg);
+        color: white;
+        padding: 30px 0;
+      }
+
+      @media (max-width: 992px) {
+        .hero-title {
+          font-size: 2.8rem;
+        }
+
+        .hero-subtitle {
+          font-size: 1.1rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero-section {
+          padding: 80px 0 60px;
+        }
+
+        .hero-title {
+          font-size: 2.3rem;
+        }
+
+        .section-subtitle {
+          font-size: 1.8rem;
+        }
+
+        .feature-card {
+          margin-bottom: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <i class="fas fa-image me-2"></i>
+          CakepIn
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#features">Features</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#enhance">Enhance Image</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6">
+            <h1 class="hero-title">Transform Your Images with AI</h1>
+            <p class="hero-subtitle">Our advanced AI technology automatically enhances your photos to make them look professional in seconds.</p>
+            <a href="#enhance" class="btn btn-light btn-lg rounded-pill px-4">Try it Now</a>
+          </div>
+          <div class="col-lg-6 text-center d-none d-lg-block">
+            <img src="" alt="Hero Image" class="img-fluid rounded-3" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5 py-md-7" id="features">
+      <div class="container py-5">
+        <div class="text-center mb-5">
+          <h6 class="section-title text-uppercase">Why Choose Us</h6>
+          <h2 class="section-subtitle">Features That Make Us Special</h2>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-4">
+            <div class="feature-card">
+              <div class="feature-icon">
+                <i class="fas fa-brain"></i>
+              </div>
+              <h3 class="feature-title">AI-Powered Enhancement</h3>
+              <p>Our advanced artificial intelligence automatically detects and improves key aspects of your images for optimal results.</p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <div class="feature-card">
+              <div class="feature-icon">
+                <i class="fas fa-tachometer-alt"></i>
+              </div>
+              <h3 class="feature-title">Lightning Fast</h3>
+              <p>Get your enhanced images in seconds with our optimized processing algorithms, no waiting or delays.</p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <div class="feature-card">
+              <div class="feature-icon">
+                <i class="fas fa-lock"></i>
+              </div>
+              <h3 class="feature-title">Privacy Protected</h3>
+              <p>Your images are processed securely and never stored on our servers longer than necessary for processing.</p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <div class="feature-card">
+              <div class="feature-icon">
+                <i class="fas fa-magic"></i>
+              </div>
+              <h3 class="feature-title">One-Click Enhancement</h3>
+              <p>No complex settings or adjustments needed - just upload and our AI handles everything automatically.</p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <div class="feature-card">
+              <div class="feature-icon">
+                <i class="fas fa-download"></i>
+              </div>
+              <h3 class="feature-title">Instant Downloads</h3>
+              <p>Download your enhanced images immediately with a single click in high quality resolution.</p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <div class="feature-card">
+              <div class="feature-icon">
+                <i class="fas fa-mobile-alt"></i>
+              </div>
+              <h3 class="feature-title">Mobile Friendly</h3>
+              <p>Enhance your photos on any device - our tool works perfectly on desktops, tablets, and smartphones.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Before and After Comparison Section -->
+    <section class="py-5" id="comparison">
+      <div class="container py-5">
+        <div class="text-center mb-5">
+          <h6 class="section-title text-uppercase">Real Results</h6>
+          <h2 class="section-subtitle">Before & After Comparison</h2>
+          <p class="mb-0">See the dramatic difference our enhancement technology can make</p>
+        </div>
+
+        <div class="row g-4">
+          <!-- Comparison 4: Old Photos -->
+          <div class="col-lg-12">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-header bg-transparent border-0 pt-4 px-4">
+                <h4 class="mb-0"><i class="fas fa-history me-2 text-primary"></i>Old Photos</h4>
+              </div>
+              <div class="card-body p-4">
+                <div class="row">
+                  <div class="col-md-6 mb-3 mb-md-0">
+                    <div class="position-relative">
+                      <img src="{{ url_for('static', filename='dif.jpg') }}" class="img-fluid rounded" width="300" height="300" alt="Before Enhancement" />
+                      <div class="position-absolute top-0 start-0 bg-dark text-white px-3 py-1 rounded-end">Before</div>
+                    </div>
+                    <div class="mt-2 text-center">
+                      <small class="text-muted">Blurry, faded with visible noise</small>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="position-relative">
+                      <img src="{{ url_for('static', filename='hasil.webp') }}" class="img-fluid rounded" width="300" height="300" alt="After Enhancement" />
+                      <div class="position-absolute top-0 start-0 bg-success text-white px-3 py-1 rounded-end">After</div>
+                    </div>
+                    <div class="mt-2 text-center">
+                      <small class="text-muted">Clearer, restored colors, reduced noise</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <div class="progress" style="height: 25px">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                      <strong>100% Improvement</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Enhancement Section -->
+    <section class="enhancement-section py-5 py-md-7" id="enhance">
+      <div class="container py-5">
+        <div class="text-center mb-5">
+          <h6 class="section-title text-uppercase">Try It Yourself</h6>
+          <h2 class="section-subtitle">Enhance Your Image Now</h2>
+          <p class="mb-0">Upload an image and see the difference our AI enhancement makes in seconds</p>
+        </div>
+
+        <div class="upload-container text-center">
+          <form id="enhanceForm" method="POST" enctype="multipart/form-data">
+            <div class="position-relative d-inline-block">
+              <label class="custom-file-upload">
+                <i class="fas fa-cloud-upload-alt me-2"></i>Choose Image
+                <input type="file" name="image" accept="image/*" required id="imageInput" style="display: none" />
+              </label>
+              <span class="file-name" id="fileName">No file selected</span>
+            </div>
+            <div class="mt-4">
+              <button type="submit" class="enhance-btn" id="enhanceBtn" disabled><i class="fas fa-magic me-2"></i>Enhance Image</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="row g-4 mt-3">
+          {% if original_image and enhanced_image %}
+          <div class="col-md-6">
+            <div class="image-container">
+              <h3 class="image-title"><i class="fas fa-image"></i> Original Image</h3>
+              <div class="image-preview">
+                <img src="{{ original_image }}" alt="Original Image" />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="image-container">
+              <h3 class="image-title"><i class="fas fa-wand-magic-sparkles"></i> Enhanced Image</h3>
+              <div class="image-preview">
+                <img id="enhanced-image" src="{{ enhanced_image }}" alt="Enhanced Image" />
+              </div>
+              <div class="text-center mt-3">
+                <button class="btn download-btn" onclick="downloadEnhancedImage()"><i class="fas fa-download me-2"></i>Download Enhanced Image</button>
+                <p><i>*Image will delete automatically after 30s</i></p>
+              </div>
+            </div>
+          </div>
+          {% else %}
+          <div class="col-md-6">
+            <div class="image-container">
+              <h3 class="image-title"><i class="fas fa-image"></i> Original Image</h3>
+              <div class="image-preview">
+                <div class="placeholder-text">Upload an image to see it here</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="image-container">
+              <h3 class="image-title"><i class="fas fa-wand-magic-sparkles"></i> Enhanced Image</h3>
+              <div class="image-preview">
+                <div class="placeholder-text">Enhanced version will appear here</div>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-5">
+      <div class="container py-5">
+        <div class="text-center mb-5">
+          <h6 class="section-title text-uppercase">What People Say</h6>
+          <h2 class="section-subtitle">Our Users Love the Results</h2>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body p-4">
+                <div class="mb-3">
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                </div>
+                <p class="card-text">"This tool saved my old family photos! The enhancement makes them look like they were taken yesterday. Incredibly easy to use too."</p>
+              </div>
+              <div class="card-footer bg-transparent border-0 pb-4 px-4">
+                <div class="d-flex align-items-center">
+                  <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px">
+                    <span>SJP</span>
+                  </div>
+                  <div class="ms-3">
+                    <h6 class="mb-0">Septian Jordan Purba</h6>
+                    <small class="text-muted">UI Designer</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body p-4">
+                <div class="mb-3">
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                </div>
+                <p class="card-text">"As a social media manager, I use this tool daily. It transforms ordinary product photos into professional-looking images in seconds."</p>
+              </div>
+              <div class="card-footer bg-transparent border-0 pb-4 px-4">
+                <div class="d-flex align-items-center">
+                  <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px">
+                    <span>HS</span>
+                  </div>
+                  <div class="ms-3">
+                    <h6 class="mb-0">Haprit Singh</h6>
+                    <small class="text-muted">Social Media Manager</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body p-4">
+                <div class="mb-3">
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star-half-alt text-warning"></i>
+                </div>
+                <p class="card-text">"I'm amazed at how well this tool works. It fixed the lighting in my real estate photos and made them look much more professional."</p>
+              </div>
+              <div class="card-footer bg-transparent border-0 pb-4 px-4">
+                <div class="d-flex align-items-center">
+                  <div class="rounded-circle bg-info text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px">
+                    <span>AS</span>
+                  </div>
+                  <div class="ms-3">
+                    <h6 class="mb-0">Ananda Sitepu</h6>
+                    <small class="text-muted">Real Estate Agent</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h5><i class="fas fa-image me-2"></i>CakepIn</h5>
+            <p>Transform your photos with our AI-powered enhancement technology.</p>
+            <p class="mb-0">&copy; 2025 CakepIn. All rights reserved.</p>
+          </div>
+          <div class="col-md-2">
+            <h6 class="mb-3">Links</h6>
+            <ul class="list-unstyled">
+              <li><a href="#home" class="text-white text-decoration-none">Home</a></li>
+              <li><a href="#features" class="text-white text-decoration-none">Features</a></li>
+              <li><a href="#enhance" class="text-white text-decoration-none">Enhance</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h6 class="mb-3">Connect With Us</h6>
+            <div class="d-flex">
+              <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom Script -->
+    <script>
+      // Handle file input display
+      const imageInput = document.getElementById('imageInput');
+      const fileName = document.getElementById('fileName');
+      const enhanceBtn = document.getElementById('enhanceBtn');
+
+      imageInput.addEventListener('change', function () {
+        if (this.files && this.files[0]) {
+          fileName.textContent = this.files[0].name;
+          enhanceBtn.disabled = false;
+        } else {
+          fileName.textContent = 'No file selected';
+          enhanceBtn.disabled = true;
+        }
+      });
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          const targetId = this.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 70,
+              behavior: 'smooth',
+            });
+
+            // Close mobile navbar if open
+            const navbarCollapse = document.querySelector('.navbar-collapse');
+            if (navbarCollapse.classList.contains('show')) {
+              navbarCollapse.classList.remove('show');
+            }
+          }
+        });
+      });
+      let countdown = 30;
+      const p = document.querySelector('.text-center p');
+      const downloadBtn = document.querySelector('.download-btn');
+
+      if (p && downloadBtn) {
+        const interval = setInterval(() => {
+          countdown--;
+          if (countdown > 0) {
+            p.innerHTML = `<i>Gambar akan terhapus otomatis dalam ${countdown} detik.</i>`;
+          } else {
+            p.innerHTML = `<i>Gambar sudah terhapus.</i>`;
+            // img.style.display = 'none';
+            downloadBtn.style.display = 'none';
+            clearInterval(interval);
+          }
+        }, 1000);
+      }
+    </script>
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: 'id',
+            includedLanguages: 'id,en',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+          },
+          'google_translate_element'
+        );
+      }
+    </script>
+
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script>
+      function translatePage(lang) {
+        const select = document.querySelector('select.goog-te-combo');
+        if (select) {
+          select.value = lang;
+          select.dispatchEvent(new Event('change'));
+        }
+      }
+    </script>
+    <script>
+      function downloadEnhancedImage() {
+        const image = document.getElementById('enhanced-image');
+        const link = document.createElement('a');
+        link.href = image.src;
+        link.download = 'enhanced_image.jpg';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    </script>
+  </body>
+</html>
